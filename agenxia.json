@@ -1,0 +1,23 @@
+{
+  "name": "Chat Agent",
+  "description": "Generic chat agent that proxies any LLM API. Supports OpenAI-compatible, Anthropic, Ollama and more — auto-detects format from URL.",
+  "type": "template",
+  "complexity": "beginner",
+  "features": [
+    "Any LLM provider support",
+    "Auto-detect API format from URL",
+    "System prompt configuration",
+    "Temperature & max tokens control",
+    "A2A protocol compatible",
+    "Zero SDK — pure fetch()"
+  ],
+  "env_vars": [
+    "LLM_API_URL",
+    "LLM_API_KEY",
+    "LLM_MODEL",
+    "SYSTEM_PROMPT",
+    "TEMPERATURE",
+    "MAX_TOKENS"
+  ],
+  "icon": "💬"
+}
