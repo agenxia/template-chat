@@ -4,12 +4,14 @@
   "description": "{{AGENT_DESCRIPTION}}",
   "main": "api/status.js",
   "scripts": {
-    "dev": "vercel dev",
-    "build": "echo 'No build step required'",
-    "start": "node api/status.js"
+    "start": "node server.js",
+    "dev": "node --watch server.js"
   },
-  "dependencies": {},
+  "dependencies": {
+    "fastify": "^5.3.0"
+  },
   "engines": {
-    "node": "18.x"
-  }
+    "node": ">=18"
+  },
+  "type": "module"
 }
