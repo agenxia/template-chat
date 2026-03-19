@@ -23,5 +23,11 @@
     "TEMPERATURE",
     "MAX_TOKENS"
   ],
-  "icon": "💬"
+  "icon": "💬",
+  "config": {
+    "system_prompt": "You are {{AGENT_NAME}}. {{AGENT_DESCRIPTION}}",
+    "model": "llama-3.3-70b",
+    "temperature": 0.7,
+    "max_tokens": 4096
+  }
 }
