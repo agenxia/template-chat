@@ -1,118 +1,39 @@
 {
-  "name": "Chat Agent",
-  "description": "Generic chat agent that proxies any LLM API. Supports OpenAI-compatible, Anthropic, Ollama and more — auto-detects format from URL.",
-  "type": "template",
-  "complexity": "beginner",
-  "features": [
-    "Any LLM provider support",
-    "Auto-detect API format from URL",
-    "System prompt configuration",
-    "Temperature & max tokens control",
-    "A2A protocol compatible",
-    "Zero SDK — pure fetch()"
-  ],
-  "env_vars": [
-    "AGENT_NAME",
-    "AGENT_ID",
-    "PLATFORM_URL",
-    "PORT",
-    "LLM_API_URL",
-    "LLM_API_KEY",
-    "LLM_MODEL",
-    "SYSTEM_PROMPT",
-    "TEMPERATURE",
-    "MAX_TOKENS"
-  ],
-  "icon": "💬",
+  "name": "{{AGENT_NAME}}",
+  "version": "1.0.0",
+  "description": "{{AGENT_DESCRIPTION}}",
+  "type": "agent",
   "config": {
-    "system_prompt": "You are {{AGENT_NAME}}. {{AGENT_DESCRIPTION}}",
+    "system_prompt": "You are {{AGENT_NAME}}, a conversational AI assistant.",
     "model": "llama-3.3-70b",
     "temperature": 0.7,
     "max_tokens": 4096
   },
+  "env_vars": ["LLM_API_URL", "LLM_API_KEY"],
+  "ports": {
+    "inputs": [
+      { "id": "message", "label": "Message", "type": "text" },
+      { "id": "context", "label": "Context", "type": "json" }
+    ],
+    "outputs": [
+      { "id": "response", "label": "Response", "type": "text" }
+    ]
+  },
   "methods": [
     {
-      "name": "chat",
-      "description": "Send a message and get a response",
+      "name": "process",
+      "description": "Chat with context",
       "params": {
-        "messages": {
-          "type": "array",
-          "required": true,
-          "description": "Array of {role, content} messages"
-        },
-        "context": {
-          "type": "object",
-          "required": false,
-          "description": "Optional context"
-        }
+        "message": { "type": "string", "from_port": "message" },
+        "context": { "type": "array", "from_port": "context" }
       },
       "returns": {
-        "content": {
-          "type": "string",
-          "description": "Agent response"
-        },
-        "metadata": {
-          "type": "object",
-          "description": "{ model, tokens }"
-        }
-      },
-      "example": {
-        "request": {
-          "jsonrpc": "2.0",
-          "id": 1,
-          "method": "chat",
-          "params": {
-            "messages": [
-              {
-                "role": "user",
-                "content": "Hello"
-              }
-            ]
-          }
-        },
-        "response": {
-          "jsonrpc": "2.0",
-          "id": 1,
-          "result": {
-            "content": "Hi! How can I help?",
-            "metadata": {
-              "model": "llama-3.3-70b"
-            }
-          }
-        }
+        "response": { "type": "string", "to_port": "response" }
       }
     }
   ],
-  "api": [
-    {
-      "method": "GET",
-      "path": "/health",
-      "description": "Health check"
-    },
-    {
-      "method": "GET",
-      "path": "/.well-known/agent-card.json",
-      "description": "Agent discovery card"
-    },
-    {
-      "method": "GET",
-      "path": "/docs",
-      "description": "API documentation (HTML)"
-    },
-    {
-      "method": "POST",
-      "path": "/api/chat",
-      "description": "Direct chat endpoint"
-    },
-    {
-      "method": "POST",
-      "path": "/api/a2a/stream",
-      "description": "A2A JSON-RPC 2.0 streaming endpoint"
-    }
-  ],
-  "metadata": {
-    "author": "agenxia",
-    "source_template": null,
-    "type": "template"
+  "api": {
+    "chat": { "type": "stream", "description": "Conversational chat" },
+    "status": { "type": "get", "description": "Agent status" }
   }
 }
